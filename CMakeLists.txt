@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("Nephilim")
 set(PROJECT_NAME "Nephilim")
+set(ROOT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 # TODO:: Set the Relase version of the suite to provide maximum optimization Wall flags etc.
 
 # Include sub-projects.
