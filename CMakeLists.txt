@@ -33,11 +33,13 @@ endif()
 # find required packages
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR})
 
 # setting asset directory
 set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/n_assets")
-            
+
+# add subdirectories
+add_subdirectory("n_characters")
 # begin creating executable and linking.
 
 ######################################################################
@@ -45,7 +47,7 @@ set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/n_assets")
 ######################################################################
 if(WIN32)
     add_executable(neph WIN32 "n_main/neph.c")
-    target_link_libraries(neph ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    target_link_libraries(neph n_characters ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 
     add_custom_command(TARGET neph POST_BUILD

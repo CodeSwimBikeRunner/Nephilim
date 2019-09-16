@@ -20,7 +20,7 @@ int main(int argc, const char *argv[])
   if(!surface)
   {
     const char * error = IMG_GetError();
-    printf("IMG_Load(): %s\n", error);
+    printf("Image failed to load: %s\n", error);
   }
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
