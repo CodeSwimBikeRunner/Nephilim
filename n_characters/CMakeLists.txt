@@ -7,4 +7,4 @@ set(N_CHAR_SOURCES "src/ranger.c"
 
 add_library(n_characters ${N_CHAR_SOURCES})
 
-install(TARGETS n_characters ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(TARGETS n_characters ARCHIVE DESTINATION ${PROJECT_SOURCE_DIR})
