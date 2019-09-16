@@ -1,7 +1,8 @@
 # Nephilim
 
 
-# Get it working locally.
+### Getting Started
+    Follow the necessary steps depending on platform.
 
 ## Windows
 
