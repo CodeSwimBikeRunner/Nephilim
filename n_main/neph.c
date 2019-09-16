@@ -19,7 +19,7 @@ int main(int argc, const char *argv[])
   SDL_Surface* surface = IMG_Load("design.png");
   if(!surface)
   {
-    char * error = IMG_GetError();
+    const char * error = IMG_GetError();
     printf("IMG_Load(): %s\n", error);
   }
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);

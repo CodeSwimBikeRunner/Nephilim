@@ -5,31 +5,76 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("Nephilim")
 
-# setting CMAKE module path for cmake scripts currently for
-# SDL2 and SDL_image
+# setting properties based on OS
+if(WIN32)
+    set(LIB_SWITCHER "x86")
+elseif(WIN64)
+    set(LIB_SWITCHER "x64")
+endif()
+# setting CMAKE module path for cmake scripts.
+# Currently:
+# SDL2 
+# SDL2_image
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # setting sdl2_image locations pita.
 set(SDL2_IMAGE_DIR ${PROJECT_SOURCE_DIR}/SDL2_image)
-set(SDL2_IMAGE_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2_image/lib/x86/SDL2_image.lib)
+set(SDL2_IMAGE_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2_image/lib/${LIB_SWITCHER}/SDL2_image.lib)
 set(SDL2_IMAGE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/SDL2_image/include)
 
 # setting sdl2 locations pita.
-set(SDL2_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2/lib/x86/SDL2.lib)
+set(SDL2_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2/lib/${LIB_SWITCHER}/SDL2.lib)
 set(SDL2_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/SDL2/include)
-set(SDL2MAIN_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2/lib/x86/SDL2main.lib)
 
-
+# setting sdl2main.
+if(WIN32)
+    set(SDL2MAIN_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2/lib/${LIB_SWITCHER}/SDL2main.lib)
+endif()
+# find required packages
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_DIRS})
 
-add_executable(neph WIN32 "neph/neph.c")
-target_link_libraries(neph ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+# setting asset directory
+set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/n_assets")
+            
+# begin creating executable and linking.
+
+######################################################################
+######                    Windows Defintion                     ######
+######################################################################
+if(WIN32)
+    add_executable(neph WIN32 "n_main/neph.c")
+    target_link_libraries(neph ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 
+    add_custom_command(TARGET neph POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${PROJECT_SOURCE_DIR}/SDL2/lib/${LIB_SWITCHER}/SDL2.dll"
+            "${PROJECT_SOURCE_DIR}/SDL2_image/lib/${LIB_SWITCHER}/SDL2_image.dll"
+            "${PROJECT_SOURCE_DIR}/SDL2_image/lib/${LIB_SWITCHER}/libjpeg-9.dll"
+            $<TARGET_FILE_DIR:neph>)
+endif()            
+
+######################################################################
+######                    Linux Defintion                       ######
+######################################################################
+
+######################################################################
+######                    OSX Defintion                         ######
+######################################################################
+
+######################################################################
+######                    Android Defintion                     ######
+######################################################################
+
+######################################################################
+######                    iOS Defintion                         ######
+######################################################################
+
+
+# copy assets to build output
 add_custom_command(TARGET neph POST_BUILD
-     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-         "${PROJECT_SOURCE_DIR}/SDL2/lib/x86/SDL2.dll"
-         "${PROJECT_SOURCE_DIR}/SDL2_image/lib/x86/SDL2_image.dll"
-         $<TARGET_FILE_DIR:neph>)
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${ASSET_DIRECTORY}/design.png"
+            $<TARGET_FILE_DIR:neph>)
