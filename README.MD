@@ -52,7 +52,7 @@
 }
 ```
 
-7. Assuming no issues, you should be able to open your command pallette [Ctrl + Shift + P] and use `CMake: Build` or `CMake: Debug Target` with no problems! Be sure to set the main target on the CMake extension. I can set up a build and launch.json later, but for now the best way to actually run this would be to navigate to the build directory and run neph.exe.
+7. Assuming no issues, you should be able to open your command pallette [Ctrl + Shift + P] and use `CMake: Build` or `CMake: Debug Target` with no problems! Be sure to set the main target on the CMake extension if you plan on using that. I can set up a build and launch.json later, but for now the best way to actually run this would be to navigate to the build directory and run neph.exe.
 
 (note: small issue is if you debug target in cmake its running in the root directory which does not have the image to load, so it will have an error)
 
