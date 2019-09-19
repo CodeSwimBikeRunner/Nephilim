@@ -58,5 +58,5 @@ build/
 # settings/ide
 .vscode
 
-*.png
-!assets
+!assets/*.png
+!assets/*.blend

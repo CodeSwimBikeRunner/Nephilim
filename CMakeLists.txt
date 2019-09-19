@@ -36,7 +36,7 @@ find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR})
 
 # setting asset directory
-set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/n_assets")
+set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/assets")
 
 # add subdirectories
 add_subdirectory("n_render")
@@ -75,7 +75,7 @@ endif()
 ######################################################################
 
 
-# copy assets to build output
+# copy assets to build output and debug output
 add_custom_command(TARGET neph POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${ASSET_DIRECTORY}/design.png"
