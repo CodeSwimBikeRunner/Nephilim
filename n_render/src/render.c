@@ -1,18 +1,20 @@
-#include "../SDL2/include/SDL.h"
-#include "../SDL2_image/include/SDL_image.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include "../render.h"
 
-int main(int argc, const char *argv[])
+struct Render {
+    SDL_Window *window;
+} Render;
+
+RenderPtr render_init(const int height,const int width)
 {
+  struct Render * my_render = malloc(sizeof(Render));
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Window *window = SDL_CreateWindow(
     "Nephilim",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
-    640,
-    640,
+    height,
+    width,
     0
   );
 
@@ -32,10 +34,17 @@ int main(int argc, const char *argv[])
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
 
-  SDL_Delay(3000);
+  my_render->window = window;
+  return my_render;
+}
 
-  SDL_DestroyWindow(window);
-  SDL_Quit();
+int render_loop(RenderPtr render)
+{
+  SDL_Delay(5000);
+}
 
-  return 0;
+void render_quit(RenderPtr render)
+{
+    SDL_DestroyWindow(render->window);
+    SDL_Quit();
 }

@@ -1,14 +1,16 @@
 #pragma once
 
-typedef struct Character* CharacterPtr;
-typedef struct Acolyte* AcolytePtr;
-typedef struct Ancient* AncientPtr;
-typedef struct Astral* AstralPtr;
-typedef struct Fighter* FighterPtr;
-typedef struct Sorcerer* SorcererPtr;
+#include "SDL.h"
 
-typedef void (*Draw)();
-typedef void (*LevelUp)();
-typedef void (*Gear)();
-typedef void (*Skills)();
-CharacterPtr character_init(Draw draw, LevelUp level_up, Gear gear);
+typedef struct character* CharacterPtr;
+
+typedef struct acolyte* AcolytePtr;
+typedef struct ancient* AncientPtr;
+typedef struct astral* AstralPtr;
+typedef struct fighter* FighterPtr;
+typedef struct sorcerer* SorcererPtr;
+typedef struct __point* Point;
+
+typedef void (*Draw)(struct __point*, struct SDL_Surface);
+
+CharacterPtr character_init(Draw draw);

@@ -39,15 +39,15 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_INCLU
 set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/n_assets")
 
 # add subdirectories
-add_subdirectory("n_characters")
+add_subdirectory("n_render")
 # begin creating executable and linking.
 
 ######################################################################
 ######                    Windows Defintion                     ######
 ######################################################################
 if(WIN32)
-    add_executable(neph WIN32 "n_main/neph.c")
-    target_link_libraries(neph n_characters ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    add_executable(neph WIN32 "n_main/main.c")
+    target_link_libraries(neph n_render ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 
     add_custom_command(TARGET neph POST_BUILD
