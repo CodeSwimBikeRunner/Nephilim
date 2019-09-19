@@ -57,3 +57,6 @@ build/
 
 # settings/ide
 .vscode
+
+*.png
+!n_assets
