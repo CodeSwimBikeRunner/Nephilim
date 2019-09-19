@@ -11,4 +11,4 @@ typedef void (*Draw)();
 typedef void (*LevelUp)();
 typedef void (*Gear)();
 typedef void (*Skills)();
-CharacterPtr character_init(Draw draw, LevelUp level_up, Gear gear, )
+CharacterPtr character_init(Draw draw, LevelUp level_up, Gear gear);
