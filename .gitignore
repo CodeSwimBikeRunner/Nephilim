@@ -59,4 +59,4 @@ build/
 .vscode
 
 *.png
-!n_assets
+!assets
