@@ -40,6 +40,7 @@ set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/assets")
 
 # add subdirectories
 add_subdirectory("n_render")
+add_subdirectory("n_observer")
 # begin creating executable and linking.
 
 ######################################################################
@@ -47,7 +48,7 @@ add_subdirectory("n_render")
 ######################################################################
 if(WIN32)
     add_executable(neph WIN32 "n_main/main.c")
-    target_link_libraries(neph n_render ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    target_link_libraries(neph n_render n_observer ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 
     add_custom_command(TARGET neph POST_BUILD
