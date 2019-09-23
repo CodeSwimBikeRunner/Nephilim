@@ -6,7 +6,8 @@ typedef struct Subject * SubjectPtr;
 // ! Having game events here is not very reusable.
 typedef enum 
 { 
-    IS_PLAYER_TURN
+    IS_PLAYER_TURN,
+    IS_MENU_OPEN
 } GAME_EVENT;
 
 SubjectPtr subject_init();
@@ -27,6 +28,10 @@ void subject_enable(SubjectPtr subject);
 void subject_emit(SubjectPtr subject, GAME_EVENT event);
 void subject_free(SubjectPtr subject);
 
-ObserverPtr observer_init();
+/*
+    * Pass in the Function you want the subject to call.
+    * Provide the is async value if this is a long running event.
+    */
+ObserverPtr observer_init(void (*func)(GAME_EVENT event), int is_async);
 void observer_emit(ObserverPtr observer, GAME_EVENT event);
 void observer_free(ObserverPtr observer);
