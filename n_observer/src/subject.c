@@ -45,7 +45,7 @@ void subject_emit(SubjectPtr subject, GAME_EVENT event)
     {
         if(subject->remove_in_constant_time)
         {
-            // TODO:: Learn how to properly use pointer arithmetic for 
+            // TODO:: Learn how to properly use pointer arithmetic 
             // TODO:: finish walking and removing
             for(int p = subject->observers; p != NULL; p++)
             {
