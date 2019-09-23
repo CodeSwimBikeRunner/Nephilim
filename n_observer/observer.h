@@ -10,13 +10,23 @@ typedef enum
 } GAME_EVENT;
 
 SubjectPtr subject_init();
-void subject_add(SubjectPtr subject, ObserverPtr observer);
-void subject_remove(SubjectPtr subject, ObserverPtr observer);
-void subject_disable(SubjectPtr);
-void subject_enable(SubjectPtr);
+/* 
+    * Returns the INT ID of the observer
+    * When you want to remove this observer from the subject,
+    * Use this INT ID.
+    */
+int subject_add(SubjectPtr subject, ObserverPtr observer);
+/*
+    * Pass in the INT ID that was provided when you added this to the subject.
+    * It will remove it based on the ID,
+    * Next time the Subject triggers notifications it will be removed in constant time.
+    */
+void subject_remove(SubjectPtr subject, ObserverPtr observer, int id);
+void subject_disable(SubjectPtr subject);
+void subject_enable(SubjectPtr subject);
 void subject_emit(SubjectPtr subject, GAME_EVENT event);
 void subject_free(SubjectPtr subject);
 
 ObserverPtr observer_init();
-void observer_emit(ObserverPtr observer, const void * entity, GAME_EVENT event);
+void observer_emit(ObserverPtr observer, GAME_EVENT event);
 void observer_free(ObserverPtr observer);
