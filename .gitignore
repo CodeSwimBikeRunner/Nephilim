@@ -60,3 +60,7 @@ build/
 
 !assets/*.png
 !assets/*.blend
+
+# sourceforge
+
+*.sum
