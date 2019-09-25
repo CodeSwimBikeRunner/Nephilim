@@ -30,7 +30,6 @@ int main(int argc, const char *argv[])
   for (i = 0; i < 3; i++) 
       pthread_create(&tid, NULL, myThreadFun, (void *)&tid); 
   
-  pthread_exit(NULL); 
   RenderPtr render = render_init(640, 640);
   
   render_loop(render);

@@ -13,6 +13,7 @@ if(WIN32)
         set(LIB_SWITCHER "x64")
     endif()
 endif()
+message(${LIB_SWITCHER})
 
 # setting CMAKE module path for cmake scripts.
 # Currently:
@@ -51,8 +52,8 @@ add_subdirectory("n_observer")
 ######                    Windows Defintion                     ######
 ######################################################################
 if(WIN32)
-    add_executable(neph WIN32 "n_main/main.c")
-    target_link_libraries(neph n_render n_observer ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    add_executable(neph "n_main/main.c")
+    target_link_libraries(neph n_render n_observer ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${WINTHREAD_LIBRARY})
 
 
     add_custom_command(TARGET neph POST_BUILD
