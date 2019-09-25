@@ -1,4 +1,9 @@
 #pragma once
+#include "stdlib.h"
+#ifdef WIN32
+#include "../WinThread/include/pthread.h"
+#include "../WinThread/include/sched.h"
+#endif
 
 typedef struct Observer * ObserverPtr;
 typedef struct Subject * SubjectPtr;

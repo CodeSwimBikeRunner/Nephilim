@@ -1,11 +1,5 @@
 #include "../observer.h"
-#include "stdlib.h"
 
-// This could be ugly.
-// we should just include the thread.h that we define.
-#ifdef WIN32
-#include "Windows.h"
-#endif // WIN32 support for pthread.
 struct Observer {
     void (*func)(GAME_EVENT event);
     int is_async;

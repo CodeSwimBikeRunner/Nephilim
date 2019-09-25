@@ -7,10 +7,13 @@ project ("Nephilim")
 
 # setting properties based on OS
 if(WIN32)
-    set(LIB_SWITCHER "x86")
-elseif(WIN64)
-    set(LIB_SWITCHER "x64")
+    if("$ENV{PROCESSOR_ARCHITECTURE}" STREQUAL "x86")
+        set(LIB_SWITCHER "x86")
+    else()
+        set(LIB_SWITCHER "x64")
+    endif()
 endif()
+
 # setting CMAKE module path for cmake scripts.
 # Currently:
 # SDL2 
@@ -29,6 +32,7 @@ set(SDL2_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/SDL2/include)
 # setting sdl2main.
 if(WIN32)
     set(SDL2MAIN_LIBRARY ${PROJECT_SOURCE_DIR}/SDL2/lib/${LIB_SWITCHER}/SDL2main.lib)
+    set(WINTHREAD_LIBRARY ${PROJECT_SOURCE_DIR}/WinThread/lib/${LIB_SWITCHER}/pthreadVC2.lib)
 endif()
 # find required packages
 find_package(SDL2 REQUIRED)
@@ -56,6 +60,7 @@ if(WIN32)
             "${PROJECT_SOURCE_DIR}/SDL2/lib/${LIB_SWITCHER}/SDL2.dll"
             "${PROJECT_SOURCE_DIR}/SDL2_image/lib/${LIB_SWITCHER}/SDL2_image.dll"
             "${PROJECT_SOURCE_DIR}/SDL2_image/lib/${LIB_SWITCHER}/libjpeg-9.dll"
+            "${PROJECT_SOURCE_DIR}/WinThread/dll/${LIB_SWITCHER}/pthreadVC2.dll"
             $<TARGET_FILE_DIR:neph>)
 endif()            
 
