@@ -44,8 +44,8 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_INCLU
 set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/assets")
 
 # add subdirectories
-add_subdirectory("n_render")
-add_subdirectory("n_observer")
+add_subdirectory("core/render")
+add_subdirectory("core/observer")
 # begin creating executable and linking.
 
 ######################################################################

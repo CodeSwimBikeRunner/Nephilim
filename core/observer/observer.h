@@ -1,8 +1,10 @@
 #pragma once
 #include "stdlib.h"
+
 #ifdef WIN32
-#include "../WinThread/include/pthread.h"
-#include "../WinThread/include/sched.h"
+#include "../../WinThread/include/pthread.h"
+#else
+#include <pthread.h>
 #endif
 
 typedef struct Observer * ObserverPtr;

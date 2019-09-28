@@ -1,11 +1,10 @@
 #include "../observer.h"
-#include "stdlib.h"
 
 #define MAX_OBSERVERS 30
 struct Subject
 {
-    int * observers_to_remove[MAX_OBSERVERS];
-    ObserverPtr * observers[MAX_OBSERVERS];
+    int observers_to_remove[MAX_OBSERVERS];
+    ObserverPtr observers[MAX_OBSERVERS];
     int count;
     int remove_in_constant_time;
     int is_enabled;
@@ -17,6 +16,7 @@ SubjectPtr subject_init()
     subject->count = 0;
     subject->remove_in_constant_time = 0;
     subject->is_enabled = 1;
+    return subject;
 }
 int subject_add(SubjectPtr subject, ObserverPtr observer)
 {
@@ -49,7 +49,7 @@ void subject_emit(SubjectPtr subject, GAME_EVENT event)
             // TODO:: finish walking and removing
             for(int p = subject->observers; p != NULL; p++)
             {
-                p = recursively_check(subject, p);
+                
             }
         }
         else {
@@ -70,9 +70,4 @@ void subject_free(SubjectPtr subject)
         observer_free((ObserverPtr)p);
     }
     free(subject);
-}
-
-int recursively_check_and_emit(SubjectPtr subject, int p)
-{
-
 }
