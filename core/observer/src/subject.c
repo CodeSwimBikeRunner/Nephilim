@@ -1,5 +1,7 @@
 #include "../observer.h"
-
+#ifdef WIN32
+#include "memory.h"
+#endif
 #define MAX_OBSERVERS 30
 struct Subject
 {
@@ -16,6 +18,10 @@ SubjectPtr subject_init()
     subject->count = 0;
     subject->remove_in_constant_time = 0;
     subject->is_enabled = 1;
+    
+    memset(subject->observers_to_remove, 0, MAX_OBSERVERS*sizeof(int));
+    memset(subject->observers, NULL, MAX_OBSERVERS*sizeof(ObserverPtr));
+
     return subject;
 }
 int subject_add(SubjectPtr subject, ObserverPtr observer)

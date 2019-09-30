@@ -1,5 +1,6 @@
 #pragma once
 #include "stdlib.h"
+#include "stdio.h"
 
 #ifdef WIN32
 #include "../../WinThread/include/pthread.h"
