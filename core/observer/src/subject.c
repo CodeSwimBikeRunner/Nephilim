@@ -7,35 +7,36 @@ struct Subject
 {
     int observers_to_remove[MAX_OBSERVERS];
     ObserverPtr observers[MAX_OBSERVERS];
-    int count;
-    int remove_in_constant_time;
+    int observer_ids[MAX_OBSERVERS];
+    int index;
+    int remove_observers;
     int is_enabled;
 };
 
 SubjectPtr subject_init()
 {
     SubjectPtr subject = malloc(sizeof(struct Subject));
-    subject->count = 0;
-    subject->remove_in_constant_time = 0;
+    subject->remove_observers = 0;
     subject->is_enabled = 1;
-    
-    memset(subject->observers_to_remove, 0, MAX_OBSERVERS*sizeof(int));
-    memset(subject->observers, NULL, MAX_OBSERVERS*sizeof(ObserverPtr));
 
+    memset(subject->observers_to_remove, 0, MAX_OBSERVERS * sizeof(int));
+    memset(subject->observers, NULL, MAX_OBSERVERS * sizeof(ObserverPtr));
+    memset(subject->observer_ids, NULL, MAX_OBSERVERS * sizeof(int));
     return subject;
 }
 int subject_add(SubjectPtr subject, ObserverPtr observer)
 {
-    int local_id = subject->count;
+    int local_id = subject->index;
     subject->observers[local_id] = observer;
     subject->observers_to_remove[local_id] = 0;
-    subject->count++;
+    subject->observer_ids[local_id] = local_id;
+    subject->index++;
     return local_id;
 }
 void subject_remove(SubjectPtr subject, ObserverPtr observer, int id)
 {
     subject->observers_to_remove[id] = 1;
-    subject->remove_in_constant_time = 1;
+    subject->remove_observers = 1;
 }
 void subject_disable(SubjectPtr subject)
 {
@@ -47,20 +48,16 @@ void subject_enable(SubjectPtr subject)
 }
 void subject_emit(SubjectPtr subject, GAME_EVENT event)
 {
-    if(subject->is_enabled)
+    if (subject->is_enabled)
     {
-        if(subject->remove_in_constant_time)
+        if (subject->remove_observers)
         {
-            // TODO:: Learn how to properly use pointer arithmetic 
-            // TODO:: finish walking and removing
-            for(int p = subject->observers; p != NULL; p++)
-            {
-                
-            }
+            remove_observers(subject);
         }
-        else {
+        else
+        {
             // walk the list of notifications
-            for(int p = subject->observers; p != NULL; p++)
+            for (int p = subject->observers; p != NULL; p++)
             {
                 observer_emit(subject->observers[p], event);
             }
@@ -69,11 +66,31 @@ void subject_emit(SubjectPtr subject, GAME_EVENT event)
 }
 void subject_free(SubjectPtr subject)
 {
-    // free all the observers first
-    // TODO:: Figure out how to use pointer arithmetic.
-    for(int p = subject->observers; p != NULL; p++)
+    for (int i = 0; subject->observers[i] != NULL; i++)
     {
-        observer_free((ObserverPtr)p);
+        observer_free(subject->observers[i]);
     }
     free(subject);
+}
+
+void remove_observers(SubjectPtr subject)
+{
+    int number_removed = 0;
+    for (int i = 0; subject->observers[i] != NULL; i++)
+    {
+        if(subject->observers_to_remove[i])
+        {
+            int local_add = i + 1;
+            subject->observers[i] = subject->observers[local_add];
+            subject->observers_to_remove[i] = subject->observers_to_remove[local_add];
+            subject->observer_ids[i] = subject->observer_ids[local_add];
+            i--;
+            number_removed++;
+        }
+    }
+
+    // ! reset the memory and index vals.
+    // int local_index = subject->index;
+    // memset(subject->observers[local_index], NULL, );
+    // memset(subject->observer_ids[])
 }
