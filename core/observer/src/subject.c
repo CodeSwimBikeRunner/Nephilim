@@ -89,8 +89,9 @@ void remove_observers(SubjectPtr subject)
         }
     }
 
-    // ! reset the memory and index vals.
-    // int local_index = subject->index;
-    // memset(subject->observers[local_index], NULL, );
-    // memset(subject->observer_ids[])
+    subject->index = subject->index - number_removed;
+    int local_index = subject->index;
+    memset(subject->observers[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(ObserverPtr));
+    memset(subject->observer_ids[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(int));
+    memset(subject->observers_to_remove[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(int));
 }
