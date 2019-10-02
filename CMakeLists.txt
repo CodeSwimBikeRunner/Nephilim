@@ -47,14 +47,39 @@ set(ASSET_DIRECTORY "${PROJECT_SOURCE_DIR}/assets")
 add_subdirectory("core/render")
 add_subdirectory("core/observer")
 # begin creating executable and linking.
+# add_custom_target(
+#    corange
+#    COMMAND make
+#    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/corange"
+# )
+# add_executable(myexecutable myexcutable.c)
+# target_link_libraries(myexecutable full_path_to_generated_library)
+# add_dependencies(myexecutable extern_lib)
 
+# add_custom_command(
+#     OUTPUT ${PROJECT_SOURCE_DIR}/corange
+#     COMMAND make
+#     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/corange
+#     )
+ 
+#  add_custom_target(
+#     corange
+#     DEPENDS ${PROJECT_SOURCE_DIR}/corange
+#     )
+ 
+#  add_executable(myexecutable myexcutable.c)
+ 
+#  target_link_libraries(myexecutable full_path_to_generated_library)
+ 
+#  add_dependencies(myexecutable extern_lib)
 ######################################################################
 ######                    Windows Defintion                     ######
 ######################################################################
 if(WIN32)
     add_executable(neph "n_main/main.c")
     target_link_libraries(neph n_render n_observer ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${WINTHREAD_LIBRARY})
-
+    # target_link_libraries(neph n_render n_observer ${PROJECT_SOURCE_DIR}/corange ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${WINTHREAD_LIBRARY})
+    # add_dependencies(neph corange)
 
     add_custom_command(TARGET neph POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
