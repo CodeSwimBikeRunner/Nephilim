@@ -13,6 +13,8 @@ struct Subject
     int is_enabled;
 };
 
+void remove_observers(SubjectPtr subject);
+
 SubjectPtr subject_init()
 {
     SubjectPtr subject = malloc(sizeof(struct Subject));
@@ -21,7 +23,7 @@ SubjectPtr subject_init()
 
     memset(subject->observers_to_remove, 0, MAX_OBSERVERS * sizeof(int));
     memset(subject->observers, NULL, MAX_OBSERVERS * sizeof(ObserverPtr));
-    memset(subject->observer_ids, NULL, MAX_OBSERVERS * sizeof(int));
+    memset(subject->observer_ids, 0, MAX_OBSERVERS * sizeof(int));
     return subject;
 }
 int subject_add(SubjectPtr subject, ObserverPtr observer)
@@ -92,6 +94,6 @@ void remove_observers(SubjectPtr subject)
     subject->index = subject->index - number_removed;
     int local_index = subject->index;
     memset(subject->observers[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(ObserverPtr));
-    memset(subject->observer_ids[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(int));
-    memset(subject->observers_to_remove[local_index], NULL, (MAX_OBSERVERS - local_index) * sizeof(int));
+    memset(subject->observer_ids[local_index], 0, (MAX_OBSERVERS - local_index) * sizeof(int));
+    memset(subject->observers_to_remove[local_index], 0, (MAX_OBSERVERS - local_index) * sizeof(int));
 }
